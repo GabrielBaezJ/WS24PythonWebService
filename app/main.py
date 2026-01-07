@@ -21,8 +21,8 @@ app.include_router(router)
 # Static files for CSS, JS, etc.
 app.mount("/static", StaticFiles(directory="frontend"), name="static")
 
-# Root route serves the frontend HTML
-@app.get("/")
+# Root route serves the frontend HTML - AFTER router to avoid conflicts
+@app.get("/", include_in_schema=False)
 async def serve_frontend():
     return FileResponse("frontend/index.html")
 
