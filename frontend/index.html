@@ -1,73 +1,73 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de Clientes</title>
+    <title>Customer Management</title>
     <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
     <div id="app">
         <div class="container">
             <header class="header">
-                <h1>Gestión de Clientes</h1>
-                <p class="subtitle">Sistema de administración de usuarios</p>
+                <h1>Customer Management</h1>
+                <p class="subtitle">User administration system</p>
             </header>
 
             <div class="loading" v-if="loading">
                 <div class="spinner"></div>
-                <p>Cargando datos...</p>
+                <p>Loading data...</p>
             </div>
 
             <div class="error-message" v-if="error">
                 <span>{{ error }}</span>
-                <button @click="cargarClientes" class="retry-btn">Reintentar</button>
+                <button @click="loadCustomers" class="retry-btn">Retry</button>
             </div>
 
             <div class="table-container" v-if="!loading && !error">
                 <div class="table-header">
-                    <h2>Lista de Clientes ({{ clientes.length }})</h2>
+                    <h2>Customer List ({{ customers.length }})</h2>
                 </div>
 
                 <div class="table-wrapper">
                     <table class="data-table">
                         <thead>
                             <tr>
-                                <th>Nombre Completo</th>
+                                <th>Full Name</th>
                                 <th>Email</th>
-                                <th>Tipo</th>
-                                <th>Descuento</th>
-                                <th>Ventas Totales</th>
+                                <th>Type</th>
+                                <th>Discount</th>
+                                <th>Total Sales</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="cliente in clientes" :key="cliente.id">
+                            <tr v-for="customer in customers" :key="customer.id">
                                 <td>
                                     <div class="cell-content">
-                                        <span class="name">{{ cliente.fullName }}</span>
+                                        <span class="name">{{ customer.fullName }}</span>
                                     </div>
                                 </td>
                                 <td>
-                                    <span class="email">{{ cliente.email }}</span>
+                                    <span class="email">{{ customer.email }}</span>
                                 </td>
                                 <td>
-                                    <span class="badge" :class="'badge-' + cliente.type.toLowerCase()">
-                                        {{ cliente.type }}
+                                    <span class="badge" :class="'badge-' + customer.type.toLowerCase()">
+                                        {{ customer.type }}
                                     </span>
                                 </td>
                                 <td>
-                                    <span class="discount">{{ formatearDescuento(cliente.discount) }}</span>
+                                    <span class="discount">{{ formatDiscount(customer.discount) }}</span>
                                 </td>
                                 <td>
-                                    <span class="total-sale">{{ formatearMoneda(cliente.totalSale) }}</span>
+                                    <span class="total-sale">{{ formatCurrency(customer.totalSale) }}</span>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
 
-                <div class="empty-state" v-if="clientes.length === 0">
-                    <p>No hay clientes registrados</p>
+                <div class="empty-state" v-if="customers.length === 0">
+                    <p>No customers registered</p>
                 </div>
             </div>
         </div>

@@ -3,14 +3,14 @@ const { createApp } = Vue;
 createApp({
     data() {
         return {
-            clientes: [],
+            customers: [],
             loading: false,
             error: null,
             apiUrl: '/customers'
         };
     },
     methods: {
-        async cargarClientes() {
+        async loadCustomers() {
             this.loading = true;
             this.error = null;
             
@@ -18,26 +18,26 @@ createApp({
                 const response = await fetch(this.apiUrl);
                 
                 if (!response.ok) {
-                    throw new Error('Error al cargar los datos');
+                    throw new Error('Failed to load data');
                 }
                 
                 const data = await response.json();
-                this.clientes = data;
+                this.customers = data;
             } catch (err) {
-                this.error = 'No se pudieron cargar los clientes. Verifica que el servidor esté activo.';
+                this.error = 'Could not load customers. Please verify that the server is active.';
                 console.error('Error:', err);
             } finally {
                 this.loading = false;
             }
         },
-        formatearMoneda(valor) {
-            return '$' + valor.toFixed(2);
+        formatCurrency(value) {
+            return '$' + value.toFixed(2);
         },
-        formatearDescuento(valor) {
-            return valor.toFixed(0) + '%';
+        formatDiscount(value) {
+            return value.toFixed(0) + '%';
         }
     },
     mounted() {
-        this.cargarClientes();
+        this.loadCustomers();
     }
 }).mount('#app');

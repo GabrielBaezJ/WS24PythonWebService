@@ -6,12 +6,12 @@ from app.models import User, user_to_dict
 router = APIRouter(prefix="/customers", tags=["Customers"])
 
 @router.get("/")
-def listar():
+def list_customers():
     return [user_to_dict(c) for c in customers.find()]
 
 @router.get("/{id}")
-def obtener(id: str):
+def get_customer(id: str):
     c = customers.find_one({"_id": ObjectId(id)})
     if not c:
-        return {"error": "No encontrado"}
+        return {"error": "Not found"}
     return user_to_dict(c)
