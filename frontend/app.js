@@ -9,6 +9,11 @@ createApp({
             apiUrl: '/customers'
         };
     },
+    computed: {
+        totalSales() {
+            return this.customers.reduce((sum, customer) => sum + customer.totalSale, 0);
+        }
+    },
     methods: {
         async loadCustomers() {
             this.loading = true;

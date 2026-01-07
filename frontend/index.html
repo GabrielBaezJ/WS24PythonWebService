@@ -27,6 +27,10 @@
             <div class="table-container" v-if="!loading && !error">
                 <div class="table-header">
                     <h2>Customer List ({{ customers.length }})</h2>
+                    <div class="total-sales-box">
+                        <span class="total-label">Total Sales:</span>
+                        <span class="total-value">{{ formatCurrency(totalSales) }}</span>
+                    </div>
                 </div>
 
                 <div class="table-wrapper">
