@@ -16,11 +16,8 @@ app.add_middleware(
 
 app.include_router(router)
 
+# Mount static files LAST - catch-all route
 app.mount("/", StaticFiles(directory="frontend", html=True), name="frontend")
-
-@app.get("/")
-def root():
-    return {"ok": True}
 
 if __name__ == "__main__":
     import uvicorn
