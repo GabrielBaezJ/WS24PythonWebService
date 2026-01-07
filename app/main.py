@@ -1,6 +1,7 @@
 import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 from app.routes import router
 from fastapi.staticfiles import StaticFiles
 
@@ -14,10 +15,16 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# API routes first
 app.include_router(router)
 
-# Mount static files LAST - catch-all route
-app.mount("/", StaticFiles(directory="frontend", html=True), name="frontend")
+# Static files for CSS, JS, etc.
+app.mount("/static", StaticFiles(directory="frontend"), name="static")
+
+# Root route serves the frontend HTML
+@app.get("/")
+async def serve_frontend():
+    return FileResponse("frontend/index.html")
 
 if __name__ == "__main__":
     import uvicorn
