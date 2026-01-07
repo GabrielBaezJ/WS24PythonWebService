@@ -21,10 +21,12 @@ app.include_router(router)
 # Static files for CSS, JS, etc.
 app.mount("/static", StaticFiles(directory="frontend"), name="static")
 
-# Root route serves the frontend HTML - AFTER router to avoid conflicts
-@app.get("/", include_in_schema=False)
-async def serve_frontend():
-    return FileResponse("frontend/index.html")
+# Root route returns JSON data from database
+@app.get("/")
+async def root():
+    from app.db import customers
+    from app.models import user_to_dict
+    return [user_to_dict(c) for c in customers.find()]
 
 if __name__ == "__main__":
     import uvicorn
